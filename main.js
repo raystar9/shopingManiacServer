@@ -13,7 +13,7 @@ var pool = mysql.createPool({
 })
 
 
-executeQuery('/discountinfo', 'CALL DiscountInfo', {discountInfo : {}});
+executeQuery('/discountinfo', 'CALL DiscountInfo', {discountinfo : {}});
 executeQuery('/beacon', 'CALL Beacon', {beacon : {}});
 
 function executeQuery(url, queryString, resultToSend) {
