@@ -13,16 +13,15 @@ var pool = mysql.createPool({
 })
 
 
-executeQuery('/discountinfo', 'CALL DiscountInfo', {discountinfo : {}});
-executeQuery('/beacon', 'CALL Beacon', {beacon : {}});
+executeQuery('discountinfo', 'CALL DiscountInfo');
+executeQuery('beacon', 'CALL Beacon');
 
-function executeQuery(url, queryString, resultToSend) {
-    app.get(url, function (req, res) {
+function executeQuery(url, queryString) {
+    app.get(`/${url}`, function (req, res) {
         pool.getConnection((err, con) => {
             con.query(queryString, (err, queryres, field) => {
-                console.log(Object.keys(queryres));
-                var key = Object.keys(resultToSend)[0];
-                resultToSend[key] = queryres[0];
+                var resultToSend = {};
+                resultToSend[url] = queryres[0];
                 res.send(resultToSend);
                 console.log(resultToSend);
             })
