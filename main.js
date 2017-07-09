@@ -13,20 +13,40 @@ var pool = mysql.createPool({
 })
 
 
-executeQuery('discountinfo', 'CALL DiscountInfo');
+callStoredProcedure('discountinfo');
 executeQuery('beacon', 'CALL Beacon');
 
-function executeQuery(url, queryString) {
-    app.get(`/${url}`, function (req, res) {
+function executeQuery(reqUrl, queryString) {            //매개변수1 : 요청URL, 매개변수2 : 쿼리문(대개 Stored Procedure로 호출)
+    app.get(`/${reqUrl}`, function (req, res) {
+        var temp = queryString + '(';                   //HTTP GET을 통해 받은 변수를 Stored Procedure의 매개변수로 변환
+        var len = Object.keys(req.query).length
+        for (var i = 0; i < len; i++) {
+            if (i == len - 1) {
+                temp = temp + req.query['arg' + i];
+            }
+            else {
+                temp = temp + req.query['arg' + i] + ', ';
+            }
+        }
+        temp = temp + ')';
+        console.log(temp);
         pool.getConnection((err, con) => {
-            con.query(queryString, (err, queryres, field) => {
+            con.query(temp, (err, sqlRes, field) => {
                 var resultToSend = {};
-                resultToSend[url] = queryres[0];
-                res.send(resultToSend);
-                console.log(resultToSend);
+                if (err == null) {
+                    resultToSend[reqUrl] = sqlRes[0];
+                    res.send(resultToSend);
+                }
+                else {
+                    res.send('err occured!');
+                }
             })
         })
     });
+}
+
+function callStoredProcedure(storedProcedure) {            //매개변수1 : 요청URL, 매개변수2 : 쿼리문(대개 Stored Procedure로 호출)
+    executeQuery(storedProcedure, 'CALL ' + storedProcedure);
 }
 
 app.listen(3030, function () {
