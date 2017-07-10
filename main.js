@@ -16,6 +16,7 @@ app.use('/images', express.static(__dirname + '/images'));
 console.log(__dirname + '/images');
 
 callStoredProcedure('discountinfo');
+callStoredProcedure('pricehistory');
 executeQuery('beacon', 'CALL Beacon');
 
 function executeQuery(reqUrl, queryString) {            //매개변수1 : 요청URL, 매개변수2 : 쿼리문(대개 Stored Procedure로 호출)
