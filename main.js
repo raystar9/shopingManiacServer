@@ -12,6 +12,8 @@ var pool = mysql.createPool({
     database: 'ShopingManiac'
 })
 
+app.use('/images', express.static(__dirname + '/images'));
+console.log(__dirname + '/images');
 
 callStoredProcedure('discountinfo');
 executeQuery('beacon', 'CALL Beacon');
