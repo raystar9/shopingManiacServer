@@ -5,10 +5,10 @@ var express = require('express');
 var app = express();
 
 var pool = mysql.createPool({
-    host: 'server.raystar.kro.kr',
+    host: 'localhost',
     port: 7492,
-    user: 'root',
-    password: 'dayss365',
+    user: 'shopingmaniac',
+    password: '159',
     database: 'ShopingManiac'
 })
 
