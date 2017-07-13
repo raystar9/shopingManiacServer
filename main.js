@@ -16,7 +16,7 @@ app.use('/images', express.static(__dirname + '/images'));
 console.log(__dirname + '/images');
 
 callStoredProcedure('GetDiscountInfo');
-callStoredProcedure('PriceHistory');
+callStoredProcedure('GetPriceHistory');
 callStoredProcedure('GetAllItem');
 callStoredProcedure('GetItemByCategory');
 callStoredProcedure('InsertDiscountInfo');
