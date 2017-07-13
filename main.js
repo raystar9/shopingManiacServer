@@ -15,8 +15,12 @@ var pool = mysql.createPool({
 app.use('/images', express.static(__dirname + '/images'));
 console.log(__dirname + '/images');
 
-callStoredProcedure('discountinfo');
-callStoredProcedure('pricehistory');
+callStoredProcedure('GetDiscountInfo');
+callStoredProcedure('PriceHistory');
+callStoredProcedure('GetAllItem');
+callStoredProcedure('GetItemByCategory');
+callStoredProcedure('InsertDiscountInfo');
+
 executeQuery('beacon', 'CALL Beacon');
 
 function executeQuery(reqUrl, queryString) {            //매개변수1 : 요청URL, 매개변수2 : 쿼리문(대개 Stored Procedure로 호출)
