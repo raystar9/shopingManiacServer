@@ -20,15 +20,17 @@ callStoredProcedure('GetPriceHistory');
 callStoredProcedure('GetAllItem');
 callStoredProcedure('GetItemByCategory');
 callStoredProcedure('InsertDiscountInfo');
+callStoredProcedure('InsertPriceHistory');
 
+// writeImage();
 executeQuery('beacon', 'CALL Beacon');
 
-function executeQuery(reqUrl, queryString) {            //매개변수1 : 요청URL, 매개변수2 : 쿼리문(대개 Stored Procedure로 호출)
+function executeQuery(reqUrl, queryString) {            //매개변수1 : 요청URL, 매개변수2 : 쿼리문
     app.get(`/${reqUrl}`, function (req, res) {
         var temp = queryString + '(';                   //HTTP GET을 통해 받은 변수를 Stored Procedure의 매개변수로 변환
         var keys = Object.keys(req.query);
         var len = keys.length
-        
+
         for (var i = 0; i < len; i++) {
             if (i == len - 1) {
                 temp = temp + req.query[keys[i]];
@@ -57,6 +59,12 @@ function executeQuery(reqUrl, queryString) {            //매개변수1 : 요청
 function callStoredProcedure(storedProcedure) {            //매개변수1 : 요청URL, 매개변수2 : 쿼리문(대개 Stored Procedure로 호출)
     executeQuery(storedProcedure, 'CALL ' + storedProcedure);
 }
+
+// function writeImage() {
+//     app.post("/WriteImage", function(req, res){
+//         console.log(req.body);
+//     })
+// }
 
 app.listen(3030, function () {
     console.log('Server is Running!');
