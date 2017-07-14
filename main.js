@@ -20,7 +20,8 @@ callStoredProcedure('GetPriceHistory');
 callStoredProcedure('GetAllItem');
 callStoredProcedure('GetItemByCategory');
 callStoredProcedure('InsertDiscountInfo');
-callStoredProcedure('InsertPriceHistory');
+callStoredProcedure('InsertItem');
+callStoredProcedure('InsertPrice');
 
 // writeImage();
 executeQuery('beacon', 'CALL Beacon');
