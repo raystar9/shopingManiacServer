@@ -28,6 +28,7 @@ callStoredProcedure('GetBeaconByBeaconId');
 callStoredProcedure('UpdateBeacon');
 callStoredProcedure('UpdateItem');
 callStoredProcedure('UpdateDiscountInfo');
+callStoredProcedure('GetCategory');
 
 // writeImage();
 executeQuery('beacon', 'CALL Beacon');
