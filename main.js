@@ -24,7 +24,7 @@ callStoredProcedure('InsertItem');
 callStoredProcedure('InsertPrice');
 callStoredProcedure('GetAllBeacon');
 callStoredProcedure('GetBeaconByCategory');
-callStoredProcedure('GetBeaconHavingCategory');
+callStoredProcedure('GetBeaconByBeaconId');
 callStoredProcedure('UpdateBeacon');
 callStoredProcedure('UpdateItem');
 callStoredProcedure('UpdateDiscountInfo');
