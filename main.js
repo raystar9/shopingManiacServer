@@ -4,7 +4,7 @@ var express = require('express');
 
 var app = express();
 
-var connection = mysql.createConnection({
+var con = mysql.createConnection({
     host: 'localhost',
     port: 7492,
     user: 'shopingmaniac',
@@ -55,24 +55,18 @@ function executeQuery(reqUrl, queryString) {            //매개변수1 : 요청
         }
         temp = temp + ')';
         console.log(temp);
-        connection.connect((err, con) => {
-            con.query(temp, (err, sqlRes, field) => {
-                var resultToSend = {};
-                if (err == null) {
-                    resultToSend[reqUrl] = sqlRes[0];
-                    res.send(resultToSend);
-                    con.release();
-                }
-                else {
-                    res.send('err occured!');
-                }
-            })
+        con.query(temp, (err, sqlRes, field) => {
+            var resultToSend = {};
+            if (err == null) {
+                resultToSend[reqUrl] = sqlRes[0];
+                res.send(resultToSend);
+                con.release();
+            }
+            else {
+                res.send('err occured!');
+            }
         })
-        pool.on('release', function(con) {
-            console.log("relesed!");
-            isAvailable = true;
-        })
-    });
+    })
 }
 
 function callStoredProcedure(storedProcedure) {            //매개변수1 : 요청URL, 매개변수2 : 쿼리문(대개 Stored Procedure로 호출)
