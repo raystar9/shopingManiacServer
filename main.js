@@ -1,8 +1,10 @@
 var fs = require('fs');
 var mysql = require('mysql');
+var Iconv = require('iconv').Iconv;
 var express = require('express');
 
 var app = express();
+var iconv = new Iconv('EUC-KR', 'UTF-8');
 
 var con = mysql.createConnection({
     host: 'localhost',
@@ -54,6 +56,7 @@ function executeQuery(reqUrl, queryString) {            //매개변수1 : 요청
             }
         }
         temp = temp + ')';
+        iconv.convert(temp);
         console.log(temp);
         con.query(temp, (err, sqlRes, field) => {
             var resultToSend = {};
