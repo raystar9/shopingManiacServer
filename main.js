@@ -4,7 +4,7 @@ var express = require('express');
 
 var app = express();
 
-var pool = mysql.createPool({
+var connection = mysql.createConnection({
     host: 'localhost',
     port: 7492,
     user: 'shopingmaniac',
@@ -55,7 +55,7 @@ function executeQuery(reqUrl, queryString) {            //매개변수1 : 요청
         }
         temp = temp + ')';
         console.log(temp);
-        pool.getConnection((err, con) => {
+        connection.connect((err, con) => {
             con.query(temp, (err, sqlRes, field) => {
                 var resultToSend = {};
                 if (err == null) {
@@ -69,7 +69,7 @@ function executeQuery(reqUrl, queryString) {            //매개변수1 : 요청
             })
         })
         pool.on('release', function(con) {
-            // console.log("emitted");
+            console.log("relesed!");
             isAvailable = true;
         })
     });
