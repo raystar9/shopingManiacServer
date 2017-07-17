@@ -15,25 +15,31 @@ var pool = mysql.createPool({
 app.use('/images', express.static(__dirname + '/images'));
 console.log(__dirname + '/images');
 
-callStoredProcedure('GetDiscountInfo');
-callStoredProcedure('GetPriceHistory');
-callStoredProcedure('GetAllItem');
-callStoredProcedure('GetItemByCategory');
-callStoredProcedure('InsertDiscountInfo');
-callStoredProcedure('InsertItem');
-callStoredProcedure('InsertPrice');
-callStoredProcedure('GetAllBeacon');
-callStoredProcedure('GetBeaconByCategory');
-callStoredProcedure('GetBeaconByBeaconId');
-callStoredProcedure('UpdateBeacon');
-callStoredProcedure('UpdateItem');
-callStoredProcedure('UpdateDiscountInfo');
-callStoredProcedure('GetCategory');
+var isAvailable = true;
+
+if (isAvailable) {
+    callStoredProcedure('GetDiscountInfo');
+    callStoredProcedure('GetPriceHistory');
+    callStoredProcedure('GetAllItem');
+    callStoredProcedure('GetItemByCategory');
+    callStoredProcedure('InsertDiscountInfo');
+    callStoredProcedure('InsertItem');
+    callStoredProcedure('InsertPrice');
+    callStoredProcedure('GetAllBeacon');
+    callStoredProcedure('GetBeaconByCategory');
+    callStoredProcedure('GetBeaconByBeaconId');
+    callStoredProcedure('UpdateBeacon');
+    callStoredProcedure('UpdateItem');
+    callStoredProcedure('UpdateDiscountInfo');
+    callStoredProcedure('GetCategory');
+}
+
 
 // writeImage();
 executeQuery('beacon', 'CALL Beacon');
 
 function executeQuery(reqUrl, queryString) {            //매개변수1 : 요청URL, 매개변수2 : 쿼리문
+    isAvailable = false;
     app.get(`/${reqUrl}`, function (req, res) {
         var temp = queryString + '(';                   //HTTP GET을 통해 받은 변수를 Stored Procedure의 매개변수로 변환
         var keys = Object.keys(req.query);
@@ -55,6 +61,7 @@ function executeQuery(reqUrl, queryString) {            //매개변수1 : 요청
                 if (err == null) {
                     resultToSend[reqUrl] = sqlRes[0];
                     res.send(resultToSend);
+                    isAvailable = true;
                 }
                 else {
                     res.send('err occured!');
