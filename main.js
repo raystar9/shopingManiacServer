@@ -55,18 +55,20 @@ function executeQuery(reqUrl, queryString) {            //매개변수1 : 요청
         }
         temp = temp + ')';
         console.log(temp);
-        pool.getConnection((err, con) => {
+        var connection = pool.getConnection((err, con) => {
             con.query(temp, (err, sqlRes, field) => {
                 var resultToSend = {};
                 if (err == null) {
                     resultToSend[reqUrl] = sqlRes[0];
                     res.send(resultToSend);
-                    isAvailable = true;
                 }
                 else {
                     res.send('err occured!');
                 }
             })
+        })
+        pool.on('release', function(connection) {
+            isAvailable = true;
         })
     });
 }
