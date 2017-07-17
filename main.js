@@ -69,7 +69,7 @@ function executeQuery(reqUrl, queryString) {            //매개변수1 : 요청
             })
         })
         pool.on('release', function(con) {
-            console.log("emitted");
+            // console.log("emitted");
             isAvailable = true;
         })
     });
