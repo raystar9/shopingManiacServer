@@ -55,7 +55,7 @@ function executeQuery(reqUrl, queryString) {            //매개변수1 : 요청
         }
         temp = temp + ')';
         console.log(temp);
-        var connection = pool.getConnection((err, con) => {
+        pool.getConnection((err, con) => {
             con.query(temp, (err, sqlRes, field) => {
                 var resultToSend = {};
                 if (err == null) {
@@ -68,7 +68,7 @@ function executeQuery(reqUrl, queryString) {            //매개변수1 : 요청
                 }
             })
         })
-        pool.on('release', function(connection) {
+        pool.on('release', function(con) {
             console.log("emitted");
             isAvailable = true;
         })
