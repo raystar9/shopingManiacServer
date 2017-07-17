@@ -4,7 +4,7 @@ var Iconv = require('iconv').Iconv;
 var express = require('express');
 
 var app = express();
-var iconv = new Iconv('EUC-KR', 'UTF-8');
+var iconv = new Iconv('EUC-KR', 'UTF-8//translit//ignore');
 
 var con = mysql.createConnection({
     host: 'localhost',
