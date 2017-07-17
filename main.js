@@ -68,6 +68,7 @@ function executeQuery(reqUrl, queryString) {            //매개변수1 : 요청
             })
         })
         pool.on('release', function(connection) {
+            connection.end();
             isAvailable = true;
         })
     });
