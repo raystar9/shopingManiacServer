@@ -61,6 +61,7 @@ function executeQuery(reqUrl, queryString) {            //매개변수1 : 요청
                 if (err == null) {
                     resultToSend[reqUrl] = sqlRes[0];
                     res.send(resultToSend);
+                    connection.end();
                 }
                 else {
                     res.send('err occured!');
