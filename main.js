@@ -56,9 +56,8 @@ function executeQuery(reqUrl, queryString) {            //매개변수1 : 요청
             }
         }
         temp = temp + ')';
-        iconv.convert(temp);
-        console.log(temp);
-        con.query(temp, (err, sqlRes, field) => {
+        console.log(iconv.convert(temp));
+        con.query(iconv.convert(temp), (err, sqlRes, field) => {
             var resultToSend = {};
             if (err == null) {
                 resultToSend[reqUrl] = sqlRes[0];
