@@ -1,10 +1,8 @@
 var fs = require('fs');
 var mysql = require('mysql');
-var Iconv = require('iconv').Iconv;
 var express = require('express');
 
 var app = express();
-var iconv = new Iconv('EUC-KR', 'UTF-8//translit//ignore');
 
 var con = mysql.createConnection({
     host: 'localhost',
@@ -48,18 +46,16 @@ function executeQuery(reqUrl, queryString) {            //매개변수1 : 요청
         var len = keys.length
 
         for (var i = 0; i < len; i++) {
+            temp = temp + req.query[keys[i]]
             if (i == len - 1) {
-                temp = temp + req.query[keys[i]];
             }
             else {
-                temp = temp + req.query[keys[i]] + ', ';
+                temp = temp + ', ';
             }
         }
         temp = temp + ')';
-        var tempBin = new Buffer(temp, 'binary');
-        var tempUtf8 = iconv.convert(tempBin).toString('utf-8')
-        console.log(tempUtf8);
-        con.query(iconv.convert(tempUtf8).toString('utf-8'), (err, sqlRes, field) => {
+        console.log(temp);
+        con.query(temp, (err, sqlRes, field) => {
             var resultToSend = {};
             if (err == null) {
                 resultToSend[reqUrl] = sqlRes[0];
